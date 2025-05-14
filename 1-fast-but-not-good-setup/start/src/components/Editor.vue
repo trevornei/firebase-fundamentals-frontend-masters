@@ -5,13 +5,14 @@ import { snarkdownEnhanced as snarkdown } from '../util';
 import { initializeApp } from 'firebase/app';
 import { config } from '../config';
 // Each subpackage will have getter methods...
-import { getFirestore, collection, onSnapshot } from 'firebase/firestore';
+import { getFirestore, collection, doc, onSnapshot } from 'firebase/firestore';
 
 const firebaseApp = initializeApp(config.firebase);
 const firestore = getFirestore(firebaseApp);
 // Lets grab data using collections!
 const markdownsCol = collection(firestore, "markdowns");
 const route = useRoute();
+const markdownDoc = doc(markdownsCol, route.params.id);
 const state = reactive({ });
 
 
@@ -19,8 +20,9 @@ const state = reactive({ });
 onMounted(() => {
 
 // onSnaphot() allows us to synchronize data in realtime within our editor.
-  onSnapshot(markdownsCol, snapshot => {
-    const data = snapshot.data();
+  // When there is a document, use snapshot to sync data from the database.
+  onSnapshot(markdownDoc, snapshot => {
+    const data = snapshot.data(); 
     state.markdown = data.markdown;
     state.converted = data.converted;
   })
