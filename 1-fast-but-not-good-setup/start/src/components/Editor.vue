@@ -5,7 +5,7 @@ import { snarkdownEnhanced as snarkdown } from '../util';
 import { initializeApp } from 'firebase/app';
 import { config } from '../config';
 // Each subpackage will have getter methods...
-import { getFirestore, collection, doc, onSnapshot } from 'firebase/firestore';
+import { getFirestore, collection, doc, onSnapshot, setDoc } from 'firebase/firestore';
 
 const firebaseApp = initializeApp(config.firebase);
 const firestore = getFirestore(firebaseApp);
@@ -31,8 +31,10 @@ onMounted(() => {
 
 function convert(event) {
   const markdown = event.target.value;
+  console.log(`Testing the evaluation of the markdown variable: ${markdown}`);
+  console.log(`Testing the evaluation of event.target.value: ${event.target.value}`);
   const converted = snarkdown(markdown);
-  state.converted = converted;
+  setDoc(markdownDoc, { converted, markdown })
 }
 
 </script>

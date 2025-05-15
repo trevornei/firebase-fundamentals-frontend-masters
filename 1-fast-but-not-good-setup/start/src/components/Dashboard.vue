@@ -1,16 +1,30 @@
 <script setup>
 import { onMounted, reactive, onBeforeMount } from 'vue';
 import { useRouter } from 'vue-router';
+import { getAuth } from 'firebase/auth';
+import { initializeApp } from 'firebase/app';
+import { config } from '../config';
+import { getFirestore, collection, doc, onSnapshot, setDoc } from 'firebase/firestore';
 
 const state = reactive({ markdowns: [] });
 const router = useRouter();
+const firebaseApp = initializeApp(config.firebase)
+const auth = getAuth(firebaseApp)
+const firestore = getFirestore(firebaseApp);
+const markdownsCol = collection(firestore, "markdowns");
+
+console.log(`Testing the value of firebasApp variable: ${firebaseApp}`);
+console.log(`Testing the value of Auth variable: ${auth}`);
 
 onBeforeMount(async () => {
-  // Get a user
+  state.user = auth.currentUser;
+  console.log(`Test Output Authenticated Anon User: ${auth.currentUser}`)
 })
 
 onMounted(() => {
-  
+  onSnapshot(markdownsCol, snapshot => {
+    state.markdowns = snapshot.docs.map(d => {})
+  })  
 })
 
 function newMarkdown() {
