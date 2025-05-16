@@ -28,6 +28,10 @@ onMounted(() => {
 })
 
 function newMarkdown() {
+  // variable references what document is to be accessed...
+  const newDoc = doc(markdownsCol);
+  // Destructive writing function --> Mutation function.
+  const setDoc = (newDoc, { markdown: '', converted: ''});
   const newId = Math.random().toString(36).substr(2, 5);
   router.push(`/editor/${newId}`)
 }
