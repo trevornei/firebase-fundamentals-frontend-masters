@@ -1,11 +1,10 @@
 <script setup>
-import { initializeApp } from 'firebase/app';
+import { initialize } from '../firebase';
 import { signInAnonymously, getAuth, onAuthStateChanged } from 'firebase/auth';
 import { config } from '../config';
 import { useRouter } from 'vue-router'
 
-const app = initializeApp(config.firebase);
-const auth = getAuth(app);
+const { firebase, firestore, auth } = initialize();
 const router = useRouter();
 
 async function signIn() {

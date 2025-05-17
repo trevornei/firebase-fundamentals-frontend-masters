@@ -17,8 +17,9 @@ export function initialize() {
   // Let's connect out to the emulators... if connection is local host!
   // We COULD use webpack and other build tools to do this logic but this is fine for now!
 
-  if (connection === 'localhost') {
-    connectAuthEmulator(auth, 'http://localhost:9099');
+  if (location.hostname === 'localhost') {
+    console.log(`The hostname for this project is: ${location.hostname}`);
+    connectAuthEmulator(auth, 'http://localhost:9099', { disableWarnings: false});
     connectFirestoreEmulator(firestore, 'localhost', 8080 );
   }
 
