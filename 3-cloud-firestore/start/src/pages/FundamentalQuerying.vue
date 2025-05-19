@@ -8,11 +8,17 @@ const { firestore } = getFirebase();
 const usersCol = collection(firestore, 'users');
 const expensesCol = collection(firestore, 'expenses');
 
-let expensesQuery = null;
 // // 1. Get the first 200 expenses.
-// expensesQuery = query(
 
-// );
+// Patterns:
+// 1) Pass in the collection that you want to query.
+// 2) Set your limit(<value>)
+
+
+const expensesQuery = query(
+  expensesCol,
+  limit(200)
+);
 
 // // 2. Get all expenses categorized as 'pets'
 // expensesQuery = query(
