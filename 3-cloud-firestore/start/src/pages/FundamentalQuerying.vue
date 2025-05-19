@@ -15,15 +15,17 @@ const expensesCol = collection(firestore, 'expenses');
 // 2) Set your limit(<value>)
 
 
+/*
 const expensesQuery = query(
   expensesCol,
   limit(200)
 );
+*/
 
 // // 2. Get all expenses categorized as 'pets'
-// expensesQuery = query(
+const expensesQuery = query(
 
-// );
+);
 
 // // 3. Get all expenses less than $200, ordered from greatest to least
 // expensesQuery = query(
