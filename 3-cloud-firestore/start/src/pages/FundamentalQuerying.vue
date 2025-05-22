@@ -23,19 +23,26 @@ const expensesQuery = query(
 */
 
 // // 2. Get all expenses categorized as 'pets'
-const expensesQuery = query(
-
-);
+//const expensesQuery = query(
+//  expensesCol, 
+//  where('category', '==', 'pets'),
+//  limit(20)
+//);
 
 // // 3. Get all expenses less than $200, ordered from greatest to least
-// expensesQuery = query(
 
-// );
+//const expensesQuery = query(
+//  expensesCol,
+//  where('cost', '<', '200'),
+//  orderBy('cost', 'desc'),
+//  limit(20)
+//);
 
 // // 4. Get all expenses that occurred before July of 2021
-// expensesQuery = query(
-
-// );
+const expensesQuery = query(
+  expensesCol,
+  where('date', '<', new Date('07/01/2021')),
+);
 
 // 5. Get all expenses between July 2021 and October 2021
 // expensesQuery = query(
