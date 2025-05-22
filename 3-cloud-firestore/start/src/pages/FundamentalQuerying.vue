@@ -39,32 +39,47 @@ const expensesQuery = query(
 //);
 
 // // 4. Get all expenses that occurred before July of 2021
-const expensesQuery = query(
-  expensesCol,
-  where('date', '<', new Date('07/01/2021')),
-);
+//const expensesQuery = query(
+//  expensesCol,
+//  where('date', '<', new Date('07/01/2021')),
+//);
 
 // 5. Get all expenses between July 2021 and October 2021
-// expensesQuery = query(
-
-// );
+//const expensesQuery = query(
+//  expensesCol,
+//  where('date', '>', new Date('07/01/2021')),
+//  where('date', '<', new Date('10/01/2021'))
+//  limit(100)
+//);
 
 // Composite queries below
 
 // 6. Get all expenses between July 2021 and October 2021 categorized as 'fun'
-// expensesQuery = query(
+//const expensesQuery = query(
+//  expensesCol,
+//  where('date', '>', new Date('07/01/2021')),
+//  where('date', '<', new Date('10/01/2021')),
+//  where('category', '==', 'fun'),
+//  limit(100)
+//);
 
-// );
+// // 7. Get all expenses are NOT categorized as 'fun', 
+// 'clothes', 'gifts', 'home', and 'personal'
+//const expensesQuery = query(
+//  expensesCol, 
+//  where('category', 'not-in', ['fun', 'clothes', 'gifts', 'home', 'personal'])
+//  limit(100)
+//);
 
-// // 7. Get all expenses are NOT categorized as 'fun', 'clothes', 'gifts', 'home', and 'personal'
-// expensesQuery = query(
-
-// );
-
-// // 8. Get all expenses are categorized as 'food' that occurred in January 2021, but not on 12/26/2021
-// expensesQuery = query(
-
-// );
+// 8. Get all expenses are categorized as 'food' that occurred in January 2021,
+// but not on 12/26/2021
+const expensesQuery = query(
+  expensesCol,
+  where('category', 'in', ['food']),
+  where('date', '>', new Date('11/31/2021')),
+  where('date', '<', new Date('01/1/2022')),
+  where('date', '!=', new Date('12/26/2021')),
+);
 
 const state = bindToTable(expensesQuery)
 
