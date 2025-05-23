@@ -6,20 +6,27 @@ import { collection, onSnapshot, limit, limitToLast, query, where, orderBy, star
 
 const { firestore } = getFirebase();
 const expensesCol = collection(firestore, 'expenses');
-let expensesQuery = null;
+// let expensesQuery = null;
 
-// // 1. Get the first 20 categories in 2022
-// expensesQuery = query(
-
-// );
+// 1. Get the first 20 categories in 2022
+//const expensesQuery = query(
+//  expensesCol, 
+//  orderBy('date'),
+//  startAt(new Date(1/1/2022)),
+//  limit(20)
+//);
 
 // // 2. Get the first 20 expenses the contain the category of 'transportation' or 'housing'
 // // that cost between $100 and $120
-// expensesQuery = query(
+//const expensesQuery = query(
+//  expensesCol,
+//  orderBy('cost'),
+//  startAt(100),
+//  endAt(120),
+//  where('categories', '==', ['housing', 'transportation'])
+//);
 
-// );
-
-// // 3. Get the last 10 expenses that contain the category of 'food'
+// Meh said teacher... // 3. Get the last 10 expenses that contain the category of 'food'
 // // that are occurred in December of 2021
 // expensesQuery = query(
 
@@ -29,17 +36,26 @@ let expensesQuery = null;
 // // that cost between 100 and 200 then get the next 10
 
 // // Step 1: First query to begin the range
-// const firstQuery = query(
+ const firstQuery = query(
+   expensesCol,
+   orderBy('cost'), 
+   startAt(100), 
+   endAt(120),
+   where('categories', 'array-contains-any', ['housing', 'kids'])
+ );
 
-// );
+ // Step 2: Second query, imagine the user clicks a 'next page' button
+ const results = await getDocs(firstQuery);
+ console.log(results.docs.map(d => d.data()));
+ const lastDoc = results.docs.at(results.length);
 
-// // Step 2: Second query, imagine the user clicks a 'next page' button
-// const results = await getDocs(firstQuery);
-// const lastDoc = results.docs.at(results.length);
-
-// expensesQuery = query(
-
-// );
+ const expensesQuery = query(
+   expensesCol,
+   orderBy('cost'), 
+   startAt(lastDoc),
+   where('categories', 'array-contains-any', ['food', 'fun', 'kids']),
+   limit(10)
+ );
 
 const state = bindToTable(expensesQuery)
 
