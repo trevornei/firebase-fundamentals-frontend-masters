@@ -6,30 +6,46 @@ import { collection, onSnapshot, limit, query, where, orderBy } from 'firebase/f
 
 const { firestore } = getFirebase();
 const expensesCol = collection(firestore, 'expenses');
-let expensesQuery = null;
+
 
 // // 1. Get the first 100 categories that are categorized as 'fun' AND 'kids'
+//const expensesQuery = query(
+//  expensesCol,
+//  where('categories', '==', ['fun', 'kids'])
+//);
+
 
 // // 2. Get the first 25 categories that are categorized as ONLY 'fun' OR 'kids'
-// expensesQuery = query(
-
-// );
+//const expensesQuery = query(
+//  expensesCol, 
+//  where('categories', 'array-contains-any', ['kids', 'fun'])
+//);
 
 // // 3. Get the first 10 categories that contain the 'fun' category
-// expensesQuery = query(
-
-// );
+//const expensesQuery = query(
+//  expensesCol,
+//  where('categories', 'array-contains', 'fun'),
+//  limit(10)
+//);
 
 // // 4. Get the first 25 categories that contain the 'fun' OR 'kids' category
-// expensesQuery = query(
+//const expensesQuery = query(
 
-// );
+//);
 
 // // 5. Get the first 25 expenses that occurred in January 2021, 
 // // but not on 12/30/2021, 12/26/2021, 12/23/2021, or 12/28/2021
-// expensesQuery = query(
-
-// );
+const expensesQuery = query(
+  expensesCol,
+  where('category', 'in', ['food']),
+  where('date', '>', new Date('11/31/2021')),
+  where('date', '<', new Date('01/1/2022')),
+  where('date', '!=', [
+    new Date('12/30/2021'),
+    new Date('12/26/2021'),
+    new Date('12/28/2021')
+  ]),
+);
 
 const state = bindToTable(expensesQuery)
 

@@ -7,7 +7,6 @@ import { collection, onSnapshot, limit, query, where, orderBy } from 'firebase/f
 const { firestore } = getFirebase();
 const usersCol = collection(firestore, 'users');
 const expensesCol = collection(firestore, 'expenses');
-
 // // 1. Get the first 200 expenses.
 
 // Patterns:
@@ -22,12 +21,12 @@ const expensesQuery = query(
 );
 */
 
-// // 2. Get all expenses categorized as 'pets'
-//const expensesQuery = query(
-//  expensesCol, 
-//  where('category', '==', 'pets'),
-//  limit(20)
-//);
+ // 2. Get all expenses categorized as 'pets'
+const expensesQuery = query(
+  expensesCol, 
+  where('category', '==', 'pets'),
+  limit(20)
+);
 
 // // 3. Get all expenses less than $200, ordered from greatest to least
 
@@ -73,13 +72,13 @@ const expensesQuery = query(
 
 // 8. Get all expenses are categorized as 'food' that occurred in January 2021,
 // but not on 12/26/2021
-const expensesQuery = query(
-  expensesCol,
-  where('category', 'in', ['food']),
-  where('date', '>', new Date('11/31/2021')),
-  where('date', '<', new Date('01/1/2022')),
-  where('date', '!=', new Date('12/26/2021')),
-);
+//const expensesQuery = query(
+//  expensesCol,
+//  where('category', 'in', ['food']),
+//  where('date', '>', new Date('11/31/2021')),
+//  where('date', '<', new Date('01/1/2022')),
+//  where('date', '!=', new Date('12/26/2021')),
+//);
 
 const state = bindToTable(expensesQuery)
 
