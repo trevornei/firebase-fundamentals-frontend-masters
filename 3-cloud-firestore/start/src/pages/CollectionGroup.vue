@@ -6,17 +6,23 @@ import { collection, onSnapshot, limit, query, where, orderBy, collectionGroup }
 
 const { firestore } = getFirebase();
 const expensesCol = collection(firestore, 'expenses');
-let expensesQuery = null;
+let expensesGroup = collectionGroup(firestore, 'expenses');
+// let expensesQuery = null;
+
 
 // // 1. Get the first 100 expenses across all users that are under $100
-// expensesQuery = query(
-
-// );
+//const expensesQuery = query(
+//  expensesGroup,
+//  limit(200), 
+//  where('cost', '<', 100)
+//);
 
 // // 2. Get the first 100 expenses across all users from any date range
-// expensesQuery = query(
-
-// );
+//const expensesQuery = query(
+//  expensesGroup,
+//  limit(100),
+//  where('date', '==', new Date('12/15/2021'))
+//);
 
 
 const state = bindToTable(expensesQuery)
