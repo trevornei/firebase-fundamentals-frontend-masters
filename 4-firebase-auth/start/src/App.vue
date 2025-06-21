@@ -15,7 +15,7 @@ import {
 } from "firebase/auth";
 import { getDocs, collection, query, where } from 'firebase/firestore';
 
-const { auth } = getFirebase();
+const { auth, firestore } = getFirebase();
 const state = reactive({ expenses: [] });
 
 function getFormDetails(event) {
@@ -28,28 +28,49 @@ function getFormDetails(event) {
 async function signIn(event) {
   event.preventDefault();
   const { email, password } = getFormDetails(event);
-
+  signinWithEmailAndPassword();
 }
 
 async function createAccount(event) {
   event.preventDefault();
   const { email, password } = getFormDetails(event);  
-
+  createUserWithEmailAndPassword(auth, email, password);   
 }
 
 function linkWithGoogle() {
+  linkWithRedirect(auth.currentUser, new GoogleAuthProvider());
 }
 
 function signInGoogle() {
-
+ signInWithRedirect(auth, new GoogleAuthProvider());
 }
 
 function signUserOut() {
-
+  signOut(auth);
 }
 
 onMounted(async () => {
-  // Get the user's expenses
+  // check if the client experienced any errors when trying to log into the application...
+  try {
+    await getRedirectReult(auth.currentUser);
+    console.log(`Account linkging success: ${user}`)
+  } catch(error) {
+    // See if any errors were thrown during the auth process. 
+    console.log(error)
+  }
+
+  // this will be where the state get's resolved.
+  onAuthStateChanged(auth, async user => {
+    state.user = user;
+    const userQuery = query(
+      collection(firestore,'expenses'),
+      where('uid', '==', 'user.uid')
+    );
+    const snapshot = await getDocs(userQuery);
+// don't forget to pass in the firestore instance as a parameter of collection(firestore, <collection_name>)
+    state.expenses = snapshot.docs.map(d => ({text: d.data.cost}))
+    
+  });
 });
 
 onBeforeUnmount(() => {
