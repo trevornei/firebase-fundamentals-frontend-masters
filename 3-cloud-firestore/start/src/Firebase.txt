@@ -1,0 +1,25 @@
+.
+├── App.vue
+├── assets
+│   └── logo.png
+├── components
+│   ├── DataTable.vue
+│   ├── DataTableCell.vue
+│   ├── DataTableHead.vue
+│   ├── DataTableRow.vue
+│   ├── DataTableRowList.vue
+│   ├── ExpenseExcersize.vue
+│   └── UserExcersize.vue
+├── config.js
+├── firebase.js
+├── Firebase.txt
+├── main.js
+└── pages
+    ├── CollectionGroup.vue
+    ├── FundamentalQuerying.vue
+    ├── Home.vue
+    ├── QueryingArrays.vue
+    ├── RangesCursoring.vue
+    └── RealtimeStreams.vue
+
+4 directories, 19 files
