@@ -58,13 +58,10 @@ exports.userCreated = functions.auth.user().onCreate(async user => {
   const db = getFirestore(firebaseApp);
   const groupQuery = db.collectionGroup('collaboratorRequests')
     .where('email', '==', user.email);
-  // Add to collaboratos for each one
   const snapshots = await groupQuery.get();
   const batch = db.batch();
   snapshots.docs.forEach(d => {
-    // bugdets/good_budget
     const budgetRef = d.ref.parent.parent;
-    // budgets/good_budget/collaborators/david_123
     const collabDoc = budgetRef.collection('collaborators').doc(user.uid);
     batch.set(collabDoc, { role: 'admin' });
   });
